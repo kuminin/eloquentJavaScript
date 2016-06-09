@@ -1,0 +1,38 @@
+<style>
+  /* Defines a cleaner look for tables */
+  table  { border-collapse: collapse; }
+  td, th { border: 1px solid black; padding: 3px 8px; }
+  th     { text-align: left; }
+</style>
+
+<script>
+  function buildTable(data) {
+    var tableNode = document.createElement("table");
+
+    var fields = Object.keys(data[0]);
+    var row = document.createElement("tr");
+
+    fields.forEach(function(field){
+      var header = document.createElement("th");
+      header.textContent = field;
+      row.appendChild(header);
+    });
+
+    tableNode.appendChild(row);
+    data.forEach(function(object) {
+      row = document.createElement("tr");
+      fields.forEach(function(field){
+        var data = document.createElement("td");
+        data.textContent = object[field];
+        if (typeof object[field] == "number") {
+          data.style.textAlign = "right";
+        }
+        row.appendChild(data);
+      });
+      tableNode.appendChild(row);
+    });
+    return tableNode;
+  }
+
+  document.body.appendChild(buildTable(MOUNTAINS));
+</script>
