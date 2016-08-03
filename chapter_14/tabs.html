@@ -1,0 +1,43 @@
+<div id="wrapper">
+  <div data-tabname="one">Tab one</div>
+  <div data-tabname="two">Tab two</div>
+  <div data-tabname="three">Tab three</div>
+</div>
+<script>
+  function asTabs(node) {
+    // Your code here.
+    var tabs = [];
+    for (var i = 0; i < node.childNodes.length; i++) {
+      var tab = node.childNodes[i];
+      if (tab.nodeType == document.ELEMENT_NODE)
+        tabs.push(tab);
+    }
+
+    var tabsList = document.createElement("div");
+    tabs.forEach(function(tab, i) {
+      var button = document.createElement("button");
+      button.textContent = tab.getAttribute("data-tabname");
+      button.addEventListener("click", function(event) {
+        display(i);
+      });
+      tabsList.appendChild(button);
+    });
+    node.insertBefore(tabsList, node.firstChild);
+
+    function display(index) {
+      var buttons = [];
+      tabs.forEach(function(tab, i) {
+        if (i == index) {
+          tab.style.display = "";
+          tabsList.childNodes[i].style.background = "Magenta";
+        }
+        else {
+          tab.style.display = "none";
+          tabsList.childNodes[i].style.background = "";
+        }
+      });
+    }
+    display(0);
+  }
+  asTabs(document.querySelector("#wrapper"));
+</script>
